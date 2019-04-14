@@ -1,8 +1,8 @@
 $(document).ready(function() {
 
     var animals = [
-      "snake","bear","butterfly","dog","panther","wolf","hamster","lion","sheep","bird","spider",
-      "jellyfish","turtle","wolf"
+      "snake","bear","butterfly","dog","panther","wolf","hamster","lion","shark","bird","spider",
+      "penguin","turtle","elephant"
     ];
   
     // function to make buttons and add to page
