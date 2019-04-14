@@ -1,60 +1,89 @@
+$(document).ready(function() {
 
-var animals = ["snake", "butterfly", "spider", "bird", "dog", "cat", "panther", "giraffe", "elephant", "chameleon"];
-
-function alertanimalName() {
-        var animalName = $(this).attr("data-name");
-
-        alert(animalName);
+    var animals = [
+      "snake","bear","butterfly","dog","panther","wolf","hamster","lion","sheep","bird","spider",
+      "jellyfish","turtle","wolf"
+    ];
+  
+    // function to make buttons and add to page
+    function animalInputButtons(arrayToUse, classToAdd, areaToAddTo) {
+      $(areaToAddTo).empty();
+  
+      for (var i = 0; i < arrayToUse.length; i++) {
+        var a = $("<button>");
+        a.addClass(classToAdd);
+        a.attr("data-type", arrayToUse[i]);
+        a.text(arrayToUse[i]);
+        $(areaToAddTo).append(a);
       }
-
- function buttonControl() {
-
- 	 $("#buttons-window").empty();
-
-
-        for (var i = 0; i < animals.length; i++) {
-
-          var a = $("<button>");
-
-          a.addClass("animal");
-
-          a.attr("data-name", animals[i]);
-
-          a.text(animals[i]);
-
-          $("#buttons-window").append(a);
-        }
- 	}
-
- 	$("#add-animal").on("click", function(event) {
-        // event.preventDefault() prevents the form from trying to submit itself.
-        // We're using a form so that the user can hit enter instead of clicking the button if they want
-        event.preventDefault();
-
-        // This line will grab the text from the input box
-        var animal = $("#animal-input").val().trim();
-        // The movie from the textbox is then added to our array
-        animals.push(animal);
-
-        // calling renderButtons which handles the processing of our movie array
-        buttonControl();
-      });
-
- 	 $(document).on("click", ".animal", alertanimalName);
-
-      // Calling the renderButtons function to display the intial buttons
-      buttonControl();
-
-
-
-
-
-
-
-
-buttonControl();
-
-
-
-
-console.log("hello");
+  
+    }
+  
+    $(document).on("click", ".animal-button", function() {
+      $("#animals").empty();
+      $(".animal-button").removeClass("active");
+      $(this).addClass("active");
+  
+      var type = $(this).attr("data-type");
+      var queryURL = "http://api.giphy.com/v1/gifs/search?q=" + type + "&api_key=qX4WrLVStuTNWkQBZKhRktP7pzP6p22T";
+  
+      $.ajax({
+        url: queryURL,
+        method: "GET"
+      })
+        .then(function(response) {
+          var results = response.data;
+  
+          for (var i = 0; i < results.length; i++) {
+            var animalDiv = $("<div class=\"animal-item\">");
+  
+            var rating = results[i].rating;
+  
+            var p = $("<p>").text("Rating: " + rating);
+  
+            var animated = results[i].images.fixed_height.url;
+            var still = results[i].images.fixed_height_still.url;
+  
+            var animalImage = $("<img>");
+            animalImage.attr("src", still);
+            animalImage.attr("data-still", still);
+            animalImage.attr("data-animate", animated);
+            animalImage.attr("data-state", "still");
+            animalImage.addClass("animal-image");
+  
+            animalDiv.append(p);
+            animalDiv.append(animalImage);
+  
+            $("#animals").append(animalDiv);
+          }
+        });
+    });
+  
+    $(document).on("click", ".animal-image", function() {
+  
+      var state = $(this).attr("data-state");
+  
+      if (state === "still") {
+        $(this).attr("src", $(this).attr("data-animate"));
+        $(this).attr("data-state", "animate");
+      }
+      else {
+        $(this).attr("src", $(this).attr("data-still"));
+        $(this).attr("data-state", "still");
+      }
+    });
+  
+    $("#add-animal").on("click", function(event) {
+      event.preventDefault();
+      var newAnimal = $("input").eq(0).val();
+  
+      if (newAnimal.length > 2) {
+        animals.push(newAnimal);
+      }
+  
+      animalInputButtons(animals, "animal-button", "#animal-buttons");
+  
+    });
+  
+    animalInputButtons(animals, "animal-button", "#animal-buttons");
+});

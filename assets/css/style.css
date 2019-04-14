@@ -1,46 +1,52 @@
-.container{
-	width: 1140px;
-	margin: auto;
-	border: 2px solid blue;
-	height: 700px;
+body {
+    font: 25px;
+    background: #ffffff;
+  }
+  
+  #animals {
+    width: 80%;
+  }
+  
+  .animal-item {
+    float: left;
+  }
+  
+  form {
+    float: right;
+    width: 10%;
+    padding: 30px;
+  }
+  
+  label {
+    display: block;
+    margin-bottom: 10px;
+    font-weight: 800;
+  }
+  
+  input[type="text"] {
+    width: 100%;
+    height: 30px;
+    margin-bottom: 10px;
+    font-size: 20px;
+  }
+  
+  button,
+  input[type="submit"] {
+    padding: 10px 20px;
+    margin: 0 15px 15px 0;
+    font-size: 20px;
+    color: #ffffff;
+    background: #659a98;
+    border-radius: 10px;
+    box-shadow: 2px 2px 3px #bbbbbb;
+    cursor: pointer;
+  }
+  
+  button:hover,
+  input[type="submit"]:hover {
+    background: #334e4d;
+  }
+  
+  button.active {
+    background: #334e4d;
 }
-
-.buttonrow{
-	width: 90%;
-	margin: auto;
-	border: 2px solid green;
-}
-
-.inputsubmit{
-	
-	border: 2px solid purple;
-}
-
-/*.inputsubmit{
-	position: absolute;
-	top: 200px;
-	border: 2px solid green;
-	margin-left: 750px;
-	width: 25%;
-}*/
-
-#buttons-view{
-	position: absolute;
-	border: 2px solid purple;
-	top:60px;
-}
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
